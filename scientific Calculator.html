@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator </title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .calculator {
+            background-color: #9ea0ab;
+            width: 350px;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 4px solid #555;
+        }
+
+        .display-container {
+            background-color: #92a18d; 
+            padding: 10px;
+            border-radius: 10px;
+            border: 3px solid #333;
+            margin-bottom: 20px;
+            text-align: right;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #screen {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 24px;
+            color: #1a1a1a;
+            outline: none;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        button {
+            padding: 12px 5px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 3px #333;
+            transition: 0.1s;
+        }
+
+        button:active {
+            box-shadow: 0 0 #333;
+            transform: translateY(3px);
+        }
+
+       
+        .num { background-color: #fff; color: black; }
+        .func { background-color: #333; color: #fff; font-size: 12px; }
+        .op { background-color: #eee; color: black; }
+        .orange { background-color: #f39c12; color: #fff; }
+        .blue { background-color: #3498db; color: #fff; }
+
+        .equal {
+            grid-column: span 1;
+            background-color: #eee;
+        }
+
+        .brand {
+            text-align: left;
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 5px;
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="brand">CASIO Style <span style="float:right; font-size: 10px;">fX-991ES PLUS</span></div>
+    
+    <div class="display-container">
+        <input type="text" id="screen" placeholder="0" readonly>
+    </div>
+
+    <div class="buttons">
+        <button class="func" onclick="mathFunc('sin')">sin</button>
+        <button class="func" onclick="mathFunc('cos')">cos</button>
+        <button class="func" onclick="mathFunc('tan')">tan</button>
+        <button class="func" onclick="mathFunc('log')">log</button>
+        <button class="func" onclick="mathFunc('sqrt')">√</button>
+
+        <button class="func" onclick="press('**')">xʸ</button>
+        <button class="func" onclick="press('Math.PI')">π</button>
+        <button class="func" onclick="press('(')">(</button>
+        <button class="func" onclick="press(')')">)</button>
+        <button class="func" onclick="mathFunc('exp')">eˣ</button>
+
+        <button class="num" onclick="press('7')">7</button>
+        <button class="num" onclick="press('8')">8</button>
+        <button class="num" onclick="press('9')">9</button>
+        <button class="orange" onclick="backspace()">DEL</button>
+        <button class="orange" onclick="clearAll()">AC</button>
+
+        <button class="num" onclick="press('4')">4</button>
+        <button class="num" onclick="press('5')">5</button>
+        <button class="num" onclick="press('6')">6</button>
+        <button class="op" onclick="press('*')">×</button>
+        <button class="op" onclick="press('/')">÷</button>
+
+        <button class="num" onclick="press('1')">1</button>
+        <button class="num" onclick="press('2')">2</button>
+        <button class="num" onclick="press('3')">3</button>
+        <button class="op" onclick="press('+')">+</button>
+        <button class="op" onclick="press('-')">-</button>
+
+        <button class="num" onclick="press('0')">0</button>
+        <button class="num" onclick="press('.')">.</button>
+        <button class="num" onclick="press('10**')">x10ˣ</button>
+        <button class="op" onclick="press('Ans')">Ans</button>
+        <button class="op" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+    let screen = document.getElementById('screen');
+    let lastResult = 0;
+
+    function press(val) {
+        if (val === 'Ans') {
+            screen.value += lastResult;
+        } else {
+            screen.value += val;
+        }
+    }
+
+    function clearAll() {
+        screen.value = "";
+    }
+
+    function backspace() {
+        screen.value = screen.value.slice(0, -1);
+    }
+
+    function mathFunc(type) {
+        if (type === 'sin') screen.value = "Math.sin(" + screen.value + ")";
+        if (type === 'cos') screen.value = "Math.cos(" + screen.value + ")";
+        if (type === 'tan') screen.value = "Math.tan(" + screen.value + ")";
+        if (type === 'log') screen.value = "Math.log10(" + screen.value + ")";
+        if (type === 'sqrt') screen.value = "Math.sqrt(" + screen.value + ")";
+        if (type === 'exp') screen.value = "Math.exp(" + screen.value + ")";
+    }
+
+    function calculate() {
+        try {
+            
+            let result = eval(screen.value);
+            screen.value = result;
+            lastResult = result;
+        } catch (e) {
+            screen.value = "Error";
+            setTimeout(() => clearAll(), 1500);
+        }
+    }
+</script>
+
+</body>
+</html>

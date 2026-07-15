@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #2d3436;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0px 15px 35px rgba(0,0,0,0.4);
+            width: 320px;
+        }
+
+        #screen {
+            width: 100%;
+            height: 60px;
+            font-size: 28px;
+            text-align: right;
+            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 8px;
+            background-color: #dfe6e9;
+            color: #2d3436;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        button {
+            padding: 18px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #636e72;
+            color: white;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: #b2bec3;
+            color: black;
+        }
+
+        .clear { background-color: #d63031; }
+        .clear:hover { background-color: #ff7675; }
+
+        .equal { 
+            background-color: #00b894; 
+            grid-row: span 2; 
+        }
+        .equal:hover { background-color: #55efc4; }
+
+        .operator { background-color: #e17055; }
+        
+        .zero { grid-column: span 2; }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <input type="text" id="screen" readonly placeholder="0">
+        
+        <div class="buttons">
+            <button onclick="clearScreen()" class="clear">C</button>
+            <button onclick="deleteLast()" class="operator">DEL</button>
+            <button onclick="addToScreen('/')" class="operator">/</button>
+            <button onclick="addToScreen('*')" class="operator">×</button>
+            
+            <button onclick="addToScreen('7')">7</button>
+            <button onclick="addToScreen('8')">8</button>
+            <button onclick="addToScreen('9')">9</button>
+            <button onclick="addToScreen('-')" class="operator">-</button>
+            
+            <button onclick="addToScreen('4')">4</button>
+            <button onclick="addToScreen('5')">5</button>
+            <button onclick="addToScreen('6')">6</button>
+            <button onclick="addToScreen('+')" class="operator">+</button>
+            
+            <button onclick="addToScreen('1')">1</button>
+            <button onclick="addToScreen('2')">2</button>
+            <button onclick="addToScreen('3')">3</button>
+            <button onclick="calculate()" class="equal">=</button>
+            
+            <button onclick="addToScreen('0')" class="zero">0</button>
+            <button onclick="addToScreen('.')">.</button>
+        </div>
+    </div>
+
+    <script>
+        let screen = document.getElementById('screen');
+
+        // اسکرین پر نمبر دکھانے کے لیے
+        function addToScreen(value) {
+            screen.value += value;
+        }
+
+        // سب کچھ صاف کرنے کے لیے
+        function clearScreen() {
+            screen.value = '';
+        }
+
+        // آخری ہندسہ مٹانے کے لیے
+        function deleteLast() {
+            screen.value = screen.value.slice(0, -1);
+        }
+
+        // حساب کتاب کا فنکشن
+        function calculate() {
+            try {
+                // eval فنکشن خود بخود ریاضی کا حساب کر دیتا ہے
+                if (screen.value !== "") {
+                    screen.value = eval(screen.value);
+                }
+            } catch (error) {
+                alert("غلط ان پٹ!");
+                clearScreen();
+            }
+        }
+    </script>
+</body>
+</html>
